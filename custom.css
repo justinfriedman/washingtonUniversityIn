@@ -1,0 +1,30 @@
+
+
+  body {
+      background: url("background.jpg") no-repeat center center fixed;
+        -webkit-background-size: cover;
+        -moz-background-size: cover;
+        -o-background-size: cover;
+        background-size: cover;
+
+
+  }
+
+  .conditions {
+    text-align: center;
+    margin-top: 20%;
+    margin-left: 5%;
+    margin-right: 5%;
+
+  }
+.location {
+  font-size: 6em;
+}
+
+.temp {
+  font-size: 4em;
+}
+
+mark {
+  background-color: #157f29;
+}

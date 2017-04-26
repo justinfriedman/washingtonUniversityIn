@@ -1,0 +1,97 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<link rel="stylesheet" href="custom.css" />
+
+
+</head>
+<body>
+<div class="conditions">
+<h1 class="location"></h1>
+<h2 class="temp"></h2>
+</div>
+
+<script>
+var cities = ['San Franciso', 'Los Angeles','Portland', 'Seattle', 'Honolulu','Pheonix','Denver','DC','Miami','New York','Boston'];
+var zips = ['94115', '90013','97215','98124','96804','85001','80203','20001','33018','10001','02101'];
+var cityAndZip = [[2],[11]];
+var zipTemps = [[3],[11]];
+for(i = 0; i < 11;++i) {
+  cityAndZip[0][i] = cities[i];
+  cityAndZip[1][i] = zips[i];
+   zipTemps[0][i] = cities[i];
+
+}
+// console.log(cityAndZip)
+
+
+
+var closestCity = [2];
+closestCity[0] = "";
+closestCity[1] = 100;
+var stlTemp;
+$.ajax({
+url: "http://api.wunderground.com/api/f500239dd8e24dec/conditions/q/63101.json",
+dataType: "json",
+success: function(url) {
+  // console.log(url);
+   stlTemp = url.current_observation.temp_f;
+  // $(".conditions").html("Current temperature in " + location + " is: " + temp_f + "F");
+}
+});
+
+for (i = 0; i<11; ++i) {
+  $.ajax({
+
+  url: "http://api.wunderground.com/api/f500239dd8e24dec/conditions/q/" +cityAndZip[1][i] + ".json",
+  dataType: "json",
+  success: function(url) {
+    //console.log(cityAndZip[1][i] + cityAndZip[0][i]);
+
+    //console.log("http://api.wunderground.com/api/f500239dd8e24dec/conditions/q/" +cityAndZip[1][i] + ".json");
+
+    var temp_f = url.current_observation.temp_f;
+    var location = url.current_observation.display_location.city;
+    console.log(temp_f + location);
+    var weather = url.current_observation.weather;
+    zipTemps[1][i] = cityAndZip[1][i];
+    // zipTemps[2][i] = url.current_observation.temp_f;
+    if (  Math.abs(stlTemp-temp_f) < Math.abs(stlTemp-closestCity[1])) {
+      closestCity[0] = cityAndZip[0][i];
+      closestCity[1] = temp_f;
+      $(".location").html("Washington University in " + "<mark>" +location+"</mark>");
+      $(".temp").html("Temperature is: " + stlTemp + " F" + conditionEmoji(weather));
+      //console.log(url);
+    }
+
+
+    // $(".conditions").html("Current temperature in " + location + " is: " + temp_f + "F");
+  }
+  });
+}
+  function conditionEmoji(weather) {
+    var string;
+    if(weather == "Overcast") {
+       string ="&#9729;";
+
+    }
+    if(weather == "Clear") {
+     string ="&#9728;";
+    }
+    if(weather == "Rain") {
+       string = "&#9730;";
+    }
+    if(weather =="Partly Cloudy" || weather =="Mostly Cloudy") {
+       string = "&#9925;";
+    }
+
+    return string;
+  }
+
+
+console.log(zipTemps);
+</script>
+</body>
+</html>
