@@ -33,7 +33,7 @@ closestCity[0] = "";
 closestCity[1] = 100;
 var stlTemp;
 $.ajax({
-url: "http://api.wunderground.com/api/f500239dd8e24dec/conditions/q/63101.json",
+url: "https://api.wunderground.com/api/f500239dd8e24dec/conditions/q/63101.json",
 dataType: "json",
 success: function(url) {
   // console.log(url);
@@ -45,7 +45,7 @@ success: function(url) {
 for (i = 0; i<11; ++i) {
   $.ajax({
 
-  url: "http://api.wunderground.com/api/f500239dd8e24dec/conditions/q/" +cityAndZip[1][i] + ".json",
+  url: "https://api.wunderground.com/api/f500239dd8e24dec/conditions/q/" +cityAndZip[1][i] + ".json",
   dataType: "json",
   success: function(url) {
     //console.log(cityAndZip[1][i] + cityAndZip[0][i]);
